@@ -45,7 +45,13 @@ class GeoPlantDataset(Dataset):
         fold = SPLITS[split]
         self.env_variables = pd.read_csv(f'{data_folder}/env_variables_{fold}.csv')
         self.landsat_timeseries = pd.read_csv(f'{data_folder}/landsat_timeseries_{fold}.csv')
-        self.satellite_patches = np.load(f'{data_folder}/satellite_patches_{fold}.npy')
+        if fold == 'train':
+            # For train split, load in two parts to save memory
+            part1 = np.load(f'{data_folder}/satellite_patches_{fold}-1.npy')
+            part2 = np.load(f'{data_folder}/satellite_patches_{fold}-2.npy')
+            self.satellite_patches = np.concatenate((part1, part2), axis=0)
+        else:
+            self.satellite_patches = np.load(f'{data_folder}/satellite_patches_{fold}.npy')
         self.species_data = np.load(f'{data_folder}/species_data_{fold}.npy')
         # Extract relevant columns
         self.survey_ids = self.env_variables['surveyId']
