@@ -1,2 +1,3 @@
 ipeo-venv/
-data/
+data/*_training*
+*/__pycache__/
