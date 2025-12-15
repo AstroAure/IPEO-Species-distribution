@@ -143,7 +143,8 @@ def validate_epoch(data_loader, model, criterion=nn.BCELoss(), device='cuda'):  
   model.to(device)
   # stats
   loss_total = 0.0
-  auc_total=0.0
+  pred_list = []
+  target_list = []
   # iterate over dataset
   for idx, sample in tqdm(enumerate(data_loader)):
     with torch.no_grad():
@@ -157,13 +158,18 @@ def validate_epoch(data_loader, model, criterion=nn.BCELoss(), device='cuda'):  
       loss = criterion(pred, target)
       # stats update
       loss_total += loss.item()
-      fpr=[0 for _ in range(342)]
-      tpr=[0 for _ in range(342)]
-      roc_auc= [0 for _ in range(342)]
-      for i in range (342):
-        fpr[i], tpr[i], _ = roc_curve(target[:, i].cpu().numpy(), pred[:, i].detach().cpu().numpy())
-        roc_auc[i] = auc(fpr[i], tpr[i])
-      auc_total += np.mean(roc_auc)
+      pred_list.append(pred.cpu().numpy())
+      target_list.append(target.cpu().numpy())
+  # AUC calculation
+  pred_list = np.concatenate(pred_list, axis=0)
+  target_list = np.concatenate(target_list, axis=0)
+  fpr=[0 for _ in range(342)]
+  tpr=[0 for _ in range(342)]
+  roc_auc= [0 for _ in range(342)]
+  for i in range (342):
+    fpr[i], tpr[i], _ = roc_curve(target_list[:, i], pred_list[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+  auc_total = np.mean(roc_auc)
   # normalise stats
   loss_total /= len(data_loader)
   auc_total /= len(data_loader)
