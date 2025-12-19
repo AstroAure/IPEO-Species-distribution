@@ -90,6 +90,8 @@ class multimodal_SDM(nn.Module): #heritates from class nn.Module
         output = self.classifier(combined)
         return output
 
+### Model saving and loading functions ###        
+
 def load_model(epoch='latest'):
   # epoch can be:
   # - an integer (number of epoch)
@@ -112,7 +114,6 @@ def load_model(epoch='latest'):
     # fresh model
     epoch = 0
   return model, epoch
-
 
 def save_model(model, epoch, auc_val=None):
   os.makedirs(f'{root}/cnn_states/{name}', exist_ok=True)
