@@ -12,7 +12,7 @@ from src.ModelUtils import root
 # 3) Don't change the class name !
 # 4) In Lord_of_the_Main.ipynb, only change the imported file "from src.MultimodalSDM" with the new file name
 
-name = 'multimodal_SDM'
+name = 'multimodal_SDM_base'
 
 # neural network with 3 NN (for each modality) and a classifier at the end #same architecture as ex7 and ex9
 #maybe add one layer in the CNN for time series?
