@@ -91,7 +91,7 @@ def validate_epoch(data_loader, model, criterion=nn.BCELoss(), device='cuda'):  
   for i in range (342):
     fpr[i], tpr[i], _ = roc_curve(target_list[:, i], pred_list[:, i])
     roc_auc[i] = auc(fpr[i], tpr[i])
-  auc_total = np.mean(roc_auc)
+  auc_total = np.median(roc_auc)
   # normalise stats
   loss_total /= len(data_loader)
   auc_total /= len(data_loader)
