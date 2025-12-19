@@ -91,13 +91,22 @@ class multimodal_SDM(nn.Module): #heritates from class nn.Module
         return output
 
 def load_model(epoch='latest'):
+  # epoch can be:
+  # - an integer (number of epoch)
+  # - 'latest' (last epoch)
+  # - 'best' (highest AUC on validation set)
+  # if no model found, a fresh model is returned with epoch=0
   model = multimodal_SDM()
   modelStates = glob.glob(f'{root}/cnn_states/{name}/*.pth')
-  if len(modelStates) and (epoch == 'latest' or epoch > 0):
-    modelStates = [int(m.replace(f'{root}/cnn_states/{name}/','').replace('.pth', '')) for m in modelStates]
+  if len(modelStates) and (epoch == 'latest' or epoch == 'best' or epoch > 0):
+    modelNames = [m.replace(f'{root}/cnn_states/{name}/','').replace('.pth', '') for m in modelStates]
+    modelEpochs = [int(m.split('_AUC')[0]) for m in modelNames]
+    modelAUCs = [float(m.split('_AUC')[1]) if '_AUC' in m else 0.0 for m in modelNames]
     if epoch == 'latest':
-      epoch = max(modelStates)
-    stateDict = torch.load(open(f'{root}/cnn_states/{name}/{epoch}.pth', 'rb'), map_location='cpu')
+      epoch = max(modelEpochs)
+    elif epoch == 'best':
+      epoch = modelEpochs[modelAUCs.index(max(modelAUCs))]
+    stateDict = torch.load(open(glob.glob(f'{root}/cnn_states/{name}/{epoch}*.pth')[0], 'rb'), map_location='cpu')
     model.load_state_dict(stateDict)
   else:
     # fresh model
@@ -105,6 +114,10 @@ def load_model(epoch='latest'):
   return model, epoch
 
 
-def save_model(model, epoch):
+def save_model(model, epoch, auc_val=None):
   os.makedirs(f'{root}/cnn_states/{name}', exist_ok=True)
-  torch.save(model.state_dict(), open(f'{root}/cnn_states/{name}/{epoch}.pth', 'wb'))
+  filename = f'{epoch}.pth' if auc_val is None else f'{epoch}_AUC{auc_val:.3f}.pth'
+  torch.save(model.state_dict(), open(f'{root}/cnn_states/{name}/{filename}', 'wb'))
+
+def delete_model(epoch):
+  os.remove(f'{root}/cnn_states/{name}/{epoch}.pth')
