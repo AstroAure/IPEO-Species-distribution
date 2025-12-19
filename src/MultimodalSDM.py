@@ -100,8 +100,8 @@ def load_model(epoch='latest'):
   modelStates = glob.glob(f'{root}/cnn_states/{name}/*.pth')
   if len(modelStates) and (epoch == 'latest' or epoch == 'best' or epoch > 0):
     modelNames = [m.replace(f'{root}/cnn_states/{name}/','').replace('.pth', '') for m in modelStates]
-    modelEpochs = [int(m.split('_AUC')[0]) for m in modelNames]
-    modelAUCs = [float(m.split('_AUC')[1]) if '_AUC' in m else 0.0 for m in modelNames]
+    modelEpochs = [int(m.split('_AUC=')[0]) for m in modelNames]
+    modelAUCs = [float(m.split('_AUC=')[1]) if '_AUC=' in m else 0.0 for m in modelNames]
     if epoch == 'latest':
       epoch = max(modelEpochs)
     elif epoch == 'best':
@@ -116,7 +116,7 @@ def load_model(epoch='latest'):
 
 def save_model(model, epoch, auc_val=None):
   os.makedirs(f'{root}/cnn_states/{name}', exist_ok=True)
-  filename = f'{epoch}.pth' if auc_val is None else f'{epoch}_AUC{auc_val:.3f}.pth'
+  filename = f'{epoch}.pth' if auc_val is None else f'{epoch}_AUC={auc_val:.3f}.pth'
   torch.save(model.state_dict(), open(f'{root}/cnn_states/{name}/{filename}', 'wb'))
 
 def delete_model(epoch):
