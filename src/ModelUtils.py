@@ -94,7 +94,6 @@ def validate_epoch(data_loader, model, criterion=nn.BCELoss(), device='cuda'):  
   auc_total = np.median(roc_auc)
   # normalise stats
   loss_total /= len(data_loader)
-  auc_total /= len(data_loader)
   return loss_total,auc_total
   
 
