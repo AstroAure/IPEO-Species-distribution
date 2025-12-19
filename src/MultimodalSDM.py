@@ -6,6 +6,14 @@ from satlaspretrain_models import Model
 
 from src.ModelUtils import root
 
+# To create and use a new model:
+# 1) Copy "MultimodalSDM.py" with a new name (in the same folder)
+# 2) Change variable "name" below (sets the folder where the weights are saved)
+# 3) Don't change the class name !
+# 4) In Lord_of_the_Main.ipynb, only change the imported file "from src.MultimodalSDM" with the new file name
+
+name = 'multimodal_SDM'
+
 # neural network with 3 NN (for each modality) and a classifier at the end #same architecture as ex7 and ex9
 #maybe add one layer in the CNN for time series?
 class multimodal_SDM(nn.Module): #heritates from class nn.Module
@@ -83,12 +91,12 @@ class multimodal_SDM(nn.Module): #heritates from class nn.Module
 
 def load_model(epoch='latest'):
   model = multimodal_SDM()
-  modelStates = glob.glob(f'{root}/cnn_states/multimodal_SDM/*.pth')
+  modelStates = glob.glob(f'{root}/cnn_states/{name}/*.pth')
   if len(modelStates) and (epoch == 'latest' or epoch > 0):
-    modelStates = [int(m.replace(f'{root}/cnn_states/multimodal_SDM/','').replace('.pth', '')) for m in modelStates]
+    modelStates = [int(m.replace(f'{root}/cnn_states/{name}/','').replace('.pth', '')) for m in modelStates]
     if epoch == 'latest':
       epoch = max(modelStates)
-    stateDict = torch.load(open(f'{root}/cnn_states/multimodal_SDM/{epoch}.pth', 'rb'), map_location='cpu')
+    stateDict = torch.load(open(f'{root}/cnn_states/{name}/{epoch}.pth', 'rb'), map_location='cpu')
     model.load_state_dict(stateDict)
   else:
     # fresh model
@@ -97,5 +105,5 @@ def load_model(epoch='latest'):
 
 
 def save_model(model, epoch):
-  os.makedirs(f'{root}/cnn_states/multimodal_SDM', exist_ok=True)
-  torch.save(model.state_dict(), open(f'{root}/cnn_states/multimodal_SDM/{epoch}.pth', 'wb'))
+  os.makedirs(f'{root}/cnn_states/{name}', exist_ok=True)
+  torch.save(model.state_dict(), open(f'{root}/cnn_states/{name}/{epoch}.pth', 'wb'))
