@@ -106,7 +106,7 @@ def load_model(epoch='latest'):
       epoch = max(modelEpochs)
     elif epoch == 'best':
       epoch = modelEpochs[modelAUCs.index(max(modelAUCs))]
-    stateDict = torch.load(open(glob.glob(f'{root}/cnn_states/{name}/{epoch}*.pth')[0], 'rb'), map_location='cpu')
+    stateDict = torch.load(open(glob.glob(f'{root}/cnn_states/{name}/{epoch}_*.pth')[0], 'rb'), map_location='cpu')
     model.load_state_dict(stateDict)
   else:
     # fresh model
@@ -120,4 +120,4 @@ def save_model(model, epoch, auc_val=None):
   torch.save(model.state_dict(), open(f'{root}/cnn_states/{name}/{filename}', 'wb'))
 
 def delete_model(epoch):
-  os.remove(f'{root}/cnn_states/{name}/{epoch}.pth')
+  os.remove(glob.glob(f'{root}/cnn_states/{name}/{epoch}_*.pth')[0])
