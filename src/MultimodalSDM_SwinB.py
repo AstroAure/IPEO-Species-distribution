@@ -13,7 +13,7 @@ from src.ModelUtils import root
 # 3) Don't change the class name !
 # 4) In Lord_of_the_Main.ipynb, only change the imported file "from src.MultimodalSDM" with the new file name
 
-name = 'multimodal_SDM_base'
+name = 'multimodal_SDM_SwinB'
 
 # neural network with 3 NN (for each modality) and a classifier at the end #same architecture as ex7 and ex9
 #maybe add one layer in the CNN for time series?
@@ -40,8 +40,9 @@ class multimodal_SDM(nn.Module): #heritates from class nn.Module
             )
         
         weights_manager = satlaspretrain_models.Weights()
-        self.CNN_sat = weights_manager.get_pretrained_model("Sentinel2_Resnet50_SI_RGB", fpn=True, head=satlaspretrain_models.Head.CLASSIFY, 
+        self.CNN_sat = weights_manager.get_pretrained_model("Sentinel2_SwinB_SI_RGB", fpn=True, head=satlaspretrain_models.Head.CLASSIFY, 
                                                 num_categories=self.dim_NN_sat, device='cpu')
+
 
         self.CNN_timeseries= nn.Sequential(
             #R G B NIR with 10 years and 4 seasons= 40 values: 4 channels, length 40
