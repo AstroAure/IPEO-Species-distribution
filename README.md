@@ -26,5 +26,5 @@ The resulting features are then concatenated and fed in a MLP to return a final 
 | Timeseries (larger kernel) |  |  |  $\pm$  |  |  |
 | Timeseries (MLP) |  |  |  $\pm$  |  |  |
 | Env (larger) |  |  |  $\pm$  |  |  |
-| Double features | 110.7 | 32.18 | 0.828 $\pm 0.078 | 0.147 | 0.072 |
+| Double features | 110.7 | 32.18 | 0.828 $\pm$ 0.078 | 0.147 | 0.072 |
 | Equal features |  |  |  $\pm$  |  |  |
