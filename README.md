@@ -25,6 +25,6 @@ The resulting features are then concatenated and fed in a MLP to return a final 
 | Satlas (SwinB) | 346.4 | 51.42 | 0.828 $\pm$ 0.079 | 0.183 | 0.091 |
 | Timeseries (larger kernel) | 108.8 | 32.12 | 0.835 $\pm$ 0.077 | 0.175 | 0.092 |
 | Timeseries (MLP) | 109.0 | 32.3 | 0.828 $\pm$ 0.077 | 0.141 | 0.066 |
-| Env (larger) |  |  |  $\pm$  |  |  |
+| Env (larger) | 108.8 | 32.25 | 0.835 $\pm$ 0.076 | 0.160 | 0.082 |
 | Double features | 110.7 | 32.18 | 0.828 $\pm$ 0.078 | 0.147 | 0.072 |
-| Equal features |  |  |  $\pm$  |  |  |
+| Equal features | 108.6 | 32.20 | 0.828 $\pm$ 0.079 | 0.176 | 0.100 |
