@@ -76,7 +76,8 @@ class multimodal_SDM(nn.Module): #heritates from class nn.Module
         #pass each modality through its NN
         NN_env_out = self.MLP_env(env_variables)
         NN_sat_out = self.CNN_sat(satellite_patches)[0]
-        NN_time_series_out = self.CNN_timeseries(landsat_timeseries)
+        NN_time_series_out = self.CNN_timeseries(torch.flatten(landsat_timeseries, start_dim=1)) #flatten (batch_size, nb_channel, length)
+        # in (batch_size, nb_channel*length) because it is MLP not CNN
 
         #concatenate the outputs
         combined = torch.cat((NN_env_out, NN_sat_out, NN_time_series_out), dim=1)
