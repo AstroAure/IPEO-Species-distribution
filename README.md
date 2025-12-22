@@ -39,4 +39,4 @@ Satellite patches | Climatic variables | Brightness timeseries | Model size [MB]
 | X |   |   | 107.9 | 31.08 | 0.515 $\pm$ 0.091 |
 |   | X |   | 1.8 | 10.05 | 0.766 $\pm$ 0.099 |
 |   |   | X | 1.6 | 10.10 | 0.774 $\pm$ 0.082 |
-|   | X | X | 2.2 | 10.62 | 0.831 $\pm$ 0.80 |
+|   | X | X | 2.2 | 10.62 | 0.831 $\pm$ 0.080 |
