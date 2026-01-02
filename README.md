@@ -23,6 +23,7 @@ The resulting features are then concatenated and fed in a MLP to return a final 
 
 | Model variation | Size [MB] | Training time [min] | Median AUC $\pm$ std | F1 (micro) | F1 (macro) |
 | :-: | :-: | :-: | :-: | :-: | :-: |
+| Untrained | 108.8 | 0.00 | 0.497 $\pm$ 0.134 | 0.073 | 0.041 |
 | Base | 108.8 | 33.05 | 0.831 $\pm$ 0.079 | 0.186 | 0.098 |
 | Satlas (SwinB) | 346.4 | 51.42 | 0.828 $\pm$ 0.079 | 0.183 | 0.091 |
 | Timeseries (larger kernel) | 108.8 | 32.12 | 0.835 $\pm$ 0.077 | 0.175 | 0.092 |
