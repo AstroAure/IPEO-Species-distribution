@@ -19,12 +19,24 @@ The resulting features are then concatenated and fed in a MLP to return a final 
 ![Training graph for the base model](results/training_multimodal_SDM_base.png)
 ![AUC for the best base model](results/AUC_occurences_multimodal_SDM_base.png)
 
+## Model variations
+
 | Model variation | Size [MB] | Training time [min] | Median AUC $\pm$ std | F1 (micro) | F1 (macro) |
 | :-: | :-: | :-: | :-: | :-: | :-: |
 | Base | 108.8 | 33.05 | 0.831 $\pm$ 0.079 | 0.186 | 0.098 |
 | Satlas (SwinB) | 346.4 | 51.42 | 0.828 $\pm$ 0.079 | 0.183 | 0.091 |
 | Timeseries (larger kernel) | 108.8 | 32.12 | 0.835 $\pm$ 0.077 | 0.175 | 0.092 |
-| Timeseries (MLP) | 109.0 | 32.3 | 0.828 $\pm$ 0.077 | 0.141 | 0.066 |
+| Timeseries (MLP) | 109.0 | 32.30 | 0.828 $\pm$ 0.077 | 0.141 | 0.066 |
 | Env (larger) | 108.8 | 32.25 | 0.835 $\pm$ 0.076 | 0.160 | 0.082 |
 | Double features | 110.7 | 32.18 | 0.828 $\pm$ 0.078 | 0.147 | 0.072 |
 | Equal features | 108.6 | 32.20 | 0.828 $\pm$ 0.079 | 0.176 | 0.100 |
+
+## Different modalities
+
+Satellite patches | Climatic variables | Brightness timeseries | Model size [MB] | Training time [min] | Median AUC $\pm$ std |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+| X | X | X | 108.8 | 33.05 | 0.831 $\pm$ 0.079 |
+| X |   |   | 107.9 | 31.08 | 0.515 $\pm$ 0.091 |
+|   | X |   | 1.8 | 10.05 | 0.766 $\pm$ 0.099 |
+|   |   | X | 1.6 | 10.10 | 0.774 $\pm$ 0.082 |
+|   | X | X | 2.2 | 10.62 | 0.831 $\pm$ 0.080 |
